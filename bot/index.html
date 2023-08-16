@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAGIC</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <h1> Генератор продуктовых идей</h1>
+    <!-- Элементы вашего приложения -->
+    <div id="input-form" style="display:none;">
+        <input type="text" id="query-input" value="Косметика для тела" placeholder="Категория для генерации идей">
+        <button id="submit-btn">Сгенерировать</button>
+    </div>
+
+    <button id="generate-btn">Новая идея</button>
+
+    <input type="search" id="search-input" placeholder="Поиск по сгенерированным идеям...">
+
+    <div id="cards-container">
+        <!-- Карточки товаров будут добавлены сюда динамически -->
+    </div>
+
+    <div id="details-modal" style="display:none;">
+        <button id="close-modal-btn">Закрыть</button>
+        <h2>Описание</h2>
+        <div id="details-content">
+            <!-- Детали карточки товара будут добавлены сюда динамически -->
+        </div>
+        <div id="gpt-details-content">
+            <!-- Детали карточки товара будут добавлены сюда gpt -->
+        </div>
+    </div>
+
+    <div id="loading-indicator"></div>
+
+    <!-- Подключение скриптов -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+
+</body>
+
+</html>

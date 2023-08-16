@@ -1,0 +1,202 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+h4 {margin:0px; margin-top:10px}
+
+/* Стили для индикатора загрузки */
+#loading-indicator {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 4px;
+    background-color: #00bfff;
+    /* Голубой цвет */
+    animation: loading 2s infinite;
+    /* Длительность анимации установлена в 2 секунды для плавности */
+    display: none;
+}
+
+@keyframes loading {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+.timestamp {
+    font-size: 12px;
+    color: #888;
+    margin-top: -10px;
+    width: 100%;
+    display: block;
+}
+
+.carddesc {
+    font-size: 14px;
+    color: #777;
+    margin-top: 0px;
+}
+
+.highlighted {
+    background-color: yellow;
+}
+
+
+/* Стили для кнопки генерации */
+#generate-btn {
+    position: fixed;
+    bottom: 10px;
+    right: 50%;
+    padding: 10px 20px;
+    width: 300px;
+    margin-right: -150px;
+    background-color: #007BFF;
+    color: #FFF;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#generate-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Стили для формы ввода */
+#input-form {
+
+    position: fixed;
+    width: 300px;
+    bottom: 10px;
+    margin-right: -150px;
+    right: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Стили для поискового поля */
+#search-input {
+    width: 100%;
+    padding: 8px 12px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    position: sticky;
+    top: 8px;
+}
+
+input,
+button {
+    box-sizing: border-box;
+
+    padding: 8px 12px;
+}
+
+/* Стили для блоков с запросами */
+.query-block {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.card {
+    display: inline-block;
+    margin: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    cursor: pointer;
+    width: 255px;
+}
+
+.card .regenimg {
+
+    width: 255px;
+    height: 255px;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+}
+
+.card .regenimg:hover {
+    opacity: 1;
+}
+
+.moreideas {
+    padding: 3px 5px;
+    margin-left: 10px;
+}
+
+.regenimgbutton {
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 4px;
+    display: block;
+    background: rgb(219, 219, 219);
+}
+
+.regenimgbutton:hover {
+    padding: 10px;
+    border-radius: 4px;
+    display: block;
+    background: white;
+}
+
+.card img {
+    width: 255px;
+    height: 255px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.card p {
+    margin-top: 14px;
+    font-weight: bold;
+}
+
+/* Стили для модального окна */
+#details-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 500px;
+    max-height: 90%;
+    overflow-y: scroll;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#close-modal-btn {
+    position: sticky;
+    right: 0px;
+    float: right;
+    top: 0px;
+}
+
+#details-content ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#details-content li {
+    margin-bottom: 10px;
+}
+
+#gpt-details-content ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#gpt-details-content li {
+    margin-bottom: 10px;
+}
