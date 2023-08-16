@@ -1,5 +1,5 @@
 const express = require('express');
-const axios = require('axios');
+const googleTrends = require('google-trends-api');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -10,11 +10,10 @@ app.get('/trends', async (req, res) => {
     if (!query) {
       return res.status(400).send('Missing query parameter');
     }
-
-    const trends = await fetchGoogleTrendsData(query);
-    if (trends) {
-      const trendNames = trends.map(trend => trend.name).join(', ');
-      res.send(`Trends: ${trendNames}`);
+    
+    const trendData = await fetchGoogleTrendsData(query);
+    if (trendData) {
+      res.json(trendData);
     } else {
       res.status(500).send('Error fetching trends');
     }
@@ -26,23 +25,13 @@ app.get('/trends', async (req, res) => {
 
 async function fetchGoogleTrendsData(query) {
   try {
-    const response = await axios.post('https://trends.google.com/trends/api/explore', {
-      hl: 'en-US',
-      tz: -120,
-      req: {
-        comparisonItem: [{ keyword: query, geo: '', time: 'today 5-y' }],
-        category: 0,
-        property: ''
-      }
+    const trendData = await googleTrends.interestOverTime({
+      keyword: query,
+      startTime: new Date(Date.now() - 31536000000), // Начало за последний год
+      granularTimeResolution: true
     });
 
-    const jsonData = JSON.parse(response.data.slice(5));
-    const trendData = jsonData.default.timelineData.map(item => ({
-      date: new Date(item.time * 1000),
-      value: item.value[0]
-    }));
-
-    return trendData;
+    return JSON.parse(trendData);
   } catch (error) {
     console.error('Error fetching Google Trends data:', error);
     return null;
@@ -52,3 +41,4 @@ async function fetchGoogleTrendsData(query) {
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
