@@ -127,21 +127,48 @@ $(document).ready(function () {
         }
 
         async function fetchGPTideas(query, cardnumber) {
+            
+           
             const url = "https://api.openai.com/v1/chat/completions";
             const headers = {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${OPENAI_API_KEY}`
             };
+            console.log(headers);
+
+            let fetchedtrends ='экология, крафт, натуральное, ответственное производство, блоггеры, местный продукт, маркетплэйс, тик ток, новые технологии, здоровье, скидки, купоны, экономия, аналог, импортозамещение';
+            let trendsurl='http://158.160.98.128/related_queries?q='+query;
+            fetch(trendsurl).then((response) => {
+                if (response.ok) {
+                    fetchedtrends=response;//return response.json();
+                }
+                throw new Error('trendsurlSomething went wrong');
+              })
+              .then((responseJson) => {
+                // Do something with the response
+              })
+              .catch((error) => {
+                console.log('trendsurl',error)
+              });
+
+              
+           
+            //let fetchedtrends ='Инновационный продукт, редкая категория';
+            //fetchedtrends=creative(fetchedtrends);
+            let role=ROLE_CONTENT.replace('{IDEANUMBER}', cardnumber);
             const body = JSON.stringify({
-                model: "gpt-3.5-turbo",
+                model: "gpt-3.5-turbo", 
                 messages: [
                     {
                         "role": "system",
-                        "content": ROLE_CONTENT.replace('{IDEANUMBER}', cardnumber)
+                        "content": role
                     },
                     {
                         "role": "user",
-                        "content": query+' (с учетом таких особенностей:'+creative(CREATIVITY)+')'
+                        "content": 
+                        'Категория:'+ query+'. '+
+                        'Используй 3 случайные из перечисленных трендов: "'+fetchedtrends+'". '+ 
+                        'Добавь креативные особенности:'+creative(CREATIVITY)+''
                     }
                 ],
                 temperature: temp
@@ -180,7 +207,7 @@ $(document).ready(function () {
                 messages: [
                     {
                         "role": "system",
-                        "content": role + ' Описание карточки:' + context
+                        "content": role + ' Описание продукта:' + context
                     },
                     {
                         "role": "user",
@@ -337,7 +364,7 @@ $(document).ready(function () {
 
         }
 
-        $('#submit-btn').click(function () { makenewcards(1); });
+        $('#submit-btn').click(function () { makenewcards(3); });
 
         $('#search-input').on('input', function () {
             let query = $(this).val().toLowerCase();
@@ -376,7 +403,7 @@ $(document).ready(function () {
             let data=await fetchGPTtext(querry,role, context);
             $("#"+id+"").html(data);
             //$("#"+id+"").html(await fetchGPTtext(querry,role, context));
-            console.log (querry+' = ',data);
+            console.log ('querry = ',querry,'role = ',role, 'context = ', context);
         }
 
         $(document).on('click', '.card',async function () {
